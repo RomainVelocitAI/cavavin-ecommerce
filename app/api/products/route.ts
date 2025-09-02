@@ -85,9 +85,17 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error fetching products:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la récupération des produits' },
-      { status: 500 }
-    )
+    
+    // En production, retourner plus de détails sur l'erreur pour le debug
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const errorDetails = {
+      error: 'Erreur lors de la récupération des produits',
+      message: errorMessage,
+      // Vérifier si c'est une erreur de connexion DB
+      isDbError: errorMessage.includes('P1001') || errorMessage.includes('connect') || errorMessage.includes('DATABASE_URL'),
+      timestamp: new Date().toISOString()
+    }
+    
+    return NextResponse.json(errorDetails, { status: 500 })
   }
 }
