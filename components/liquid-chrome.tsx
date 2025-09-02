@@ -90,8 +90,8 @@ export const Component: FC<ComponentProps> = ({
         }
         `;
 
-        const geometry = new Triangle(gl);
-        const program = new Program(gl, {
+        const geometry = new Triangle(gl as any);
+        const program = new Program(gl as any, {
         vertex: vertexShader,
         fragment: fragmentShader,
         uniforms: {
@@ -110,7 +110,7 @@ export const Component: FC<ComponentProps> = ({
             uMouse: { value: new Float32Array([0.5, 0.5]) }, // Initialize mouse to center
         },
         });
-        const mesh = new Mesh(gl, { geometry, program });
+        const mesh = new Mesh(gl as any, { geometry, program });
 
         function resize() {
             if (!renderer || !gl || !container) return;
@@ -121,8 +121,10 @@ export const Component: FC<ComponentProps> = ({
             if (width === 0 || height === 0) return;
 
             renderer.setSize(width * dpr, height * dpr);
-            gl.canvas.style.width = `${width}px`;
-            gl.canvas.style.height = `${height}px`;
+            if ('style' in gl.canvas) {
+                gl.canvas.style.width = `${width}px`;
+                gl.canvas.style.height = `${height}px`;
+            }
 
             const resUniform = program.uniforms.uResolution.value as Float32Array;
             resUniform[0] = gl.canvas.width;
@@ -173,7 +175,9 @@ export const Component: FC<ComponentProps> = ({
         if (container.firstChild) {
             container.removeChild(container.firstChild);
         }
-        container.appendChild(gl.canvas);
+        if (gl.canvas instanceof HTMLCanvasElement) {
+            container.appendChild(gl.canvas);
+        }
 
         return () => {
             cancelAnimationFrame(animationId);
@@ -182,7 +186,7 @@ export const Component: FC<ComponentProps> = ({
                 container.removeEventListener("mousemove", handleMouseMove);
                 container.removeEventListener("touchmove", handleTouchMove);
             }
-            if (gl && gl.canvas && gl.canvas.parentElement) {
+            if (gl && gl.canvas && gl.canvas instanceof HTMLCanvasElement && gl.canvas.parentElement) {
                 gl.canvas.parentElement.removeChild(gl.canvas);
             }
             if (gl) {

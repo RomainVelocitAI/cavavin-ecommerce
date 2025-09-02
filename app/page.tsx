@@ -10,7 +10,7 @@ import { ImageTrail } from '@/components/ui/image-trail'
 import { useRef } from 'react'
 
 export default function HomePage() {
-  const heroRef = useRef<HTMLElement>(null)
+  const heroRef = useRef<HTMLElement>(null!)
   
   // Images de vins pour le trail
   const wineImages = [
