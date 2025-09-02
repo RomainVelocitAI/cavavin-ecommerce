@@ -6,6 +6,20 @@ import { ProductFilters } from '@/components/product/ProductFilters'
 import { getSessionId } from '@/lib/utils/cart'
 import { Loader2 } from 'lucide-react'
 
+interface Product {
+  id: string
+  name: string
+  price: number
+  slug: string
+  description?: string
+  images?: string[]
+  category?: {
+    id: string
+    name: string
+    slug: string
+  }
+}
+
 const categories = [
   { id: '1', name: 'Vins Rouges', slug: 'vins-rouges' },
   { id: '2', name: 'Vins Blancs', slug: 'vins-blancs' },
@@ -15,7 +29,7 @@ const categories = [
 ]
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<any[]>([])
+  const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     category: '',
@@ -70,11 +84,11 @@ export default function ProductsPage() {
       }
     } catch (error) {
       console.error('Error adding to cart:', error)
-      alert('Erreur lors de l\'ajout au panier')
+      alert('Erreur lors de l&apos;ajout au panier')
     }
   }
 
-  const handleFilterChange = (newFilters: any) => {
+  const handleFilterChange = (newFilters: { category: string; sort: string }) => {
     setFilters(newFilters)
     setPage(1) // Reset to first page when filters change
   }

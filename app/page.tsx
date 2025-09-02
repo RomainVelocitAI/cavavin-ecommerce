@@ -51,7 +51,7 @@ export default function HomePage() {
             </h1>
             <p className="text-xl mb-8 text-white/90">
               Découvrez notre sélection exceptionnelle de plus de 250 vins et spiritueux. 
-              Livraison sur toute l'île ou retrait en boutique.
+              Livraison sur toute l&apos;île ou retrait en boutique.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/products">
@@ -81,9 +81,9 @@ export default function HomePage() {
               <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="h-8 w-8 text-red-900" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Livraison sur toute l'île</h3>
+              <h3 className="text-lg font-semibold mb-2">Livraison sur toute l&apos;île</h3>
               <p className="text-gray-600">
-                Livraison gratuite dès 100€ d'achat. Service rapide et soigné.
+                Livraison gratuite dès 100€ d&apos;achat. Service rapide et soigné.
               </p>
             </div>
             
@@ -93,7 +93,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-semibold mb-2">Click & Collect</h3>
               <p className="text-gray-600">
-                Commandez en ligne et récupérez vos achats dans l'une de nos 2 boutiques.
+                Commandez en ligne et récupérez vos achats dans l&apos;une de nos 2 boutiques.
               </p>
             </div>
             
@@ -103,7 +103,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-semibold mb-2">Paiement sécurisé</h3>
               <p className="text-gray-600">
-                Transactions 100% sécurisées avec vérification d'âge obligatoire.
+                Transactions 100% sécurisées avec vérification d&apos;âge obligatoire.
               </p>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function HomePage() {
       <section className="py-8 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm">
-            La vente d'alcool est interdite aux mineurs. L'abus d'alcool est dangereux pour la santé. 
+            La vente d&apos;alcool est interdite aux mineurs. L&apos;abus d&apos;alcool est dangereux pour la santé. 
             À consommer avec modération.
           </p>
         </div>

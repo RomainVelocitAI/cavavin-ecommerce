@@ -207,7 +207,7 @@ const DeformationPlane = ({ imageSrc }: DeformationImageProps) => {
     }
   });
 
-  const handlePointerMove = (event: any) => {
+  const handlePointerMove = (event: { uv: { x: number; y: number } }) => {
     if (!meshRef.current) return;
 
     // Get mouse position relative to the plane (normalized from -0.5 to 0.5)

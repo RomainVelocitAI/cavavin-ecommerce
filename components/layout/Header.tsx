@@ -25,7 +25,7 @@ export function Header() {
       })
       if (response.ok) {
         const cart = await response.json()
-        const count = cart.items?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0
+        const count = cart.items?.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0) || 0
         setCartCount(count)
       }
     } catch (error) {
@@ -49,7 +49,7 @@ export function Header() {
             </span>
           </div>
           <div>
-            Livraison gratuite dès 100€ d'achat
+            Livraison gratuite dès 100€ d&apos;achat
           </div>
         </div>
       </div>

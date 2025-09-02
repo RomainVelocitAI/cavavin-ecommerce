@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db/prisma'
+import { Prisma } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit
     
     // Construction de la clause where
-    const where: any = {}
+    const where: Prisma.ProductWhereInput = {}
     
     if (category) {
       where.category = {
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
     
     // Détermination de l'ordre de tri
-    let orderBy: any = {}
+    let orderBy: Prisma.ProductOrderByWithRelationInput = {}
     switch (sort) {
       case 'price-asc':
         orderBy = { price: 'asc' }

@@ -66,7 +66,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/age-verification" className="hover:text-white transition">
-                  Vérification d'âge
+                  Vérification d&apos;âge
                 </Link>
               </li>
             </ul>
@@ -100,7 +100,7 @@ export function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
           <p>© 2024 Cavavin La Réunion. Tous droits réservés.</p>
           <p className="mt-2">
-            L'abus d'alcool est dangereux pour la santé. À consommer avec modération.
+            L&apos;abus d&apos;alcool est dangereux pour la santé. À consommer avec modération.
           </p>
         </div>
       </div>

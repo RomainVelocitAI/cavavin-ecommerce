@@ -107,7 +107,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center space-x-4">
               <p className="text-wine-300 text-xs">
-                L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
+                L&apos;abus d&apos;alcool est dangereux pour la santé, à consommer avec modération.
               </p>
               <span className="inline-flex items-center justify-center w-8 h-8 bg-wine-700 text-champagne font-bold rounded-full text-xs">
                 18+

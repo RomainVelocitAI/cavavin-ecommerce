@@ -124,7 +124,7 @@ export default function ProductPage({ params }: PageProps) {
                 <div className="flex items-start gap-3">
                   <Wine className="h-5 w-5 text-wine-700 mt-0.5" />
                   <div>
-                    <p className="text-sm text-gray-500">Degré d'alcool</p>
+                    <p className="text-sm text-gray-500">Degré d&apos;alcool</p>
                     <p className="font-medium">{product.alcoholContent}</p>
                   </div>
                 </div>

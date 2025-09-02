@@ -161,7 +161,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             )}
             {product.alcoholContent && (
               <div className="flex justify-between">
-                <span className="text-gray-600">Degré d'alcool:</span>
+                <span className="text-gray-600">Degré d&apos;alcool:</span>
                 <span className="font-medium">{product.alcoholContent}%</span>
               </div>
             )}

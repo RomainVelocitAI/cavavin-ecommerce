@@ -11,7 +11,7 @@ export default function HeroSection() {
             Cavavin La Réunion
           </h1>
           <p className="text-lg md:text-xl text-gray-600">
-            Plus de 250 vins et spiritueux d'exception
+            Plus de 250 vins et spiritueux d&apos;exception
           </p>
         </div>
       </ContainerScale>

@@ -25,7 +25,14 @@ export function formatPrice(price: number): string {
   }).format(price)
 }
 
-export function calculateCartTotal(items: any[]): {
+interface CartItem {
+  product: {
+    price: number
+  }
+  quantity: number
+}
+
+export function calculateCartTotal(items: CartItem[]): {
   subtotal: number
   deliveryFee: number
   total: number
