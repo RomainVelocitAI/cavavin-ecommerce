@@ -291,7 +291,7 @@ export default function CheckoutPage() {
                         {...register('address')}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-900"
                       />
-                      {errors.address && (
+                      {'address' in errors && errors.address && (
                         <p className="text-red-600 text-sm mt-1">
                           {errors.address.message}
                         </p>
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
                           {...register('city')}
                           className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-900"
                         />
-                        {errors.city && (
+                        {'city' in errors && errors.city && (
                           <p className="text-red-600 text-sm mt-1">
                             {errors.city.message}
                           </p>
@@ -322,7 +322,7 @@ export default function CheckoutPage() {
                           {...register('postalCode')}
                           className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-900"
                         />
-                        {errors.postalCode && (
+                        {'postalCode' in errors && errors.postalCode && (
                           <p className="text-red-600 text-sm mt-1">
                             {errors.postalCode.message}
                           </p>
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
                       </label>
                     ))}
                   </div>
-                  {errors.storeId && (
+                  {'storeId' in errors && errors.storeId && (
                     <p className="text-red-600 text-sm mt-2">
                       {errors.storeId.message}
                     </p>
@@ -376,7 +376,7 @@ export default function CheckoutPage() {
                         min={new Date().toISOString().split('T')[0]}
                         className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-900"
                       />
-                      {errors.pickupDate && (
+                      {'pickupDate' in errors && errors.pickupDate && (
                         <p className="text-red-600 text-sm mt-1">
                           {errors.pickupDate.message}
                         </p>
@@ -401,7 +401,7 @@ export default function CheckoutPage() {
                         <option value="17:00">17:00</option>
                         <option value="18:00">18:00</option>
                       </select>
-                      {errors.pickupTime && (
+                      {'pickupTime' in errors && errors.pickupTime && (
                         <p className="text-red-600 text-sm mt-1">
                           {errors.pickupTime.message}
                         </p>
