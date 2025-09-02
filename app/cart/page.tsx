@@ -16,7 +16,7 @@ export default function CartPage() {
             <ShoppingBag className="h-24 w-24 text-gray-300 mx-auto mb-6" />
             <h1 className="text-3xl font-bold mb-4">Votre panier est vide</h1>
             <p className="text-gray-600 mb-8">
-              Découvrez notre sélection de vins et spiritueux d'exception
+              Découvrez notre sélection de vins et spiritueux d&apos;exception
             </p>
             <Link href="/products">
               <Button className="bg-wine-700 hover:bg-wine-900">
