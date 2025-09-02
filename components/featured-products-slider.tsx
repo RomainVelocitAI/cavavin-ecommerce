@@ -130,7 +130,7 @@ export default function FeaturedProductsSlider() {
             {products.map((product, index) => (
               <Link
                 key={`${product.id}-${index}`}
-                href={`/products/${product.slug}`}
+                href={`/produit/${product.slug}`}
                 className="min-w-[300px] flex-shrink-0 group"
               >
                 <div className="bg-white border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
