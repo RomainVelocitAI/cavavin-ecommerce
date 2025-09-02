@@ -26,7 +26,7 @@ export default function CheckoutSuccessPage() {
           
           <Link href="/">
             <Button variant="outline" className="w-full">
-              Retour à l'accueil
+              Retour à l&apos;accueil
             </Button>
           </Link>
         </div>

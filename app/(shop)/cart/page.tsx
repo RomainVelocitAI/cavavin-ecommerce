@@ -7,8 +7,27 @@ import { Trash2, Plus, Minus, ShoppingCart, ArrowRight, Wine } from 'lucide-reac
 import { Button } from '@/components/ui/button'
 import { formatPrice, getSessionId, calculateCartTotal } from '@/lib/utils/cart'
 
+interface CartItem {
+  id: string
+  quantity: number
+  product: {
+    id: string
+    name: string
+    price: number
+    images?: string[]
+    vintage?: number
+    region?: string
+    grapeVariety?: string
+  }
+}
+
+interface Cart {
+  id: string
+  items: CartItem[]
+}
+
 export default function CartPage() {
-  const [cart, setCart] = useState<any>(null)
+  const [cart, setCart] = useState<Cart | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -113,7 +132,7 @@ export default function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm">
-            {items.map((item: any) => (
+            {items.map((item: CartItem) => (
               <div
                 key={item.id}
                 className="flex gap-4 p-4 border-b last:border-b-0"
@@ -203,7 +222,7 @@ export default function CartPage() {
               </div>
               {totals.deliveryFee > 0 && (
                 <p className="text-sm text-gray-600">
-                  Livraison gratuite dès 100€ d'achat
+                  Livraison gratuite dès 100€ d&apos;achat
                 </p>
               )}
             </div>

@@ -26,9 +26,25 @@ const stores = [
   },
 ]
 
+interface CartItem {
+  id: string
+  quantity: number
+  product: {
+    id: string
+    name: string
+    price: number
+    images?: string[]
+  }
+}
+
+interface Cart {
+  id: string
+  items: CartItem[]
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
-  const [cart, setCart] = useState<any>(null)
+  const [cart, setCart] = useState<Cart | null>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [showAgeModal, setShowAgeModal] = useState(true)
@@ -123,10 +139,10 @@ export default function CheckoutPage() {
           <div className="bg-white rounded-lg max-w-md w-full p-6">
             <div className="flex items-center gap-3 mb-4 text-red-600">
               <AlertCircle className="h-6 w-6" />
-              <h2 className="text-xl font-semibold">Vérification d'âge</h2>
+              <h2 className="text-xl font-semibold">Vérification d&apos;âge</h2>
             </div>
             <p className="mb-6 text-gray-700">
-              La vente d'alcool est interdite aux mineurs. 
+              La vente d&apos;alcool est interdite aux mineurs. 
               En continuant, vous certifiez avoir plus de 18 ans.
             </p>
             <div className="flex gap-3">
@@ -135,13 +151,13 @@ export default function CheckoutPage() {
                 variant="outline"
                 className="flex-1"
               >
-                J'ai moins de 18 ans
+                J&apos;ai moins de 18 ans
               </Button>
               <Button
                 onClick={() => setShowAgeModal(false)}
                 className="flex-1 bg-red-900 hover:bg-red-800"
               >
-                J'ai plus de 18 ans
+                J&apos;ai plus de 18 ans
               </Button>
             </div>
           </div>
@@ -239,7 +255,7 @@ export default function CheckoutPage() {
                     <div>
                       <p className="font-medium">Livraison à domicile</p>
                       <p className="text-sm text-gray-600">
-                        Livraison sur toute l'île de La Réunion
+                        Livraison sur toute l&apos;île de La Réunion
                       </p>
                     </div>
                   </label>
@@ -408,7 +424,7 @@ export default function CheckoutPage() {
                       Je certifie avoir plus de 18 ans *
                     </p>
                     <p className="text-sm text-gray-600">
-                      La vente d'alcool est interdite aux mineurs
+                      La vente d&apos;alcool est interdite aux mineurs
                     </p>
                   </div>
                 </label>
