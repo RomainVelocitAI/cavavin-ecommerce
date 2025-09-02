@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductFilters } from '@/components/product/ProductFilters'
 import { getSessionId } from '@/lib/utils/cart'
+import { getProducts as fetchProducts, getCategories } from '@/lib/supabase/client'
 import { Loader2 } from 'lucide-react'
 
 interface Product {
@@ -23,15 +24,9 @@ interface Product {
   inStock: boolean
 }
 
-const categories = [
-  { id: '1', name: 'Vins Rouges', slug: 'vins-rouges' },
-  { id: '2', name: 'Vins Blancs', slug: 'vins-blancs' },
-  { id: '3', name: 'Vins Rosés', slug: 'vins-roses' },
-  { id: '4', name: 'Spiritueux', slug: 'spiritueux' },
-  { id: '5', name: 'Champagnes', slug: 'champagnes' },
-]
 
 export default function ProductsPage() {
+  const [categories, setCategories] = useState<any[]>([])
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -42,24 +37,34 @@ export default function ProductsPage() {
   const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
-    fetchProducts()
+    loadCategories()
+  }, [])
+
+  useEffect(() => {
+    loadProducts()
   }, [filters, page])
 
-  const fetchProducts = async () => {
+  const loadCategories = async () => {
+    try {
+      const cats = await getCategories()
+      setCategories(cats || [])
+    } catch (error) {
+      console.error('Error loading categories:', error)
+    }
+  }
+
+  const loadProducts = async () => {
     setLoading(true)
     try {
-      const params = new URLSearchParams({
-        page: page.toString(),
-        limit: '12',
-        ...(filters.category && { category: filters.category }),
+      const { products: data, pagination } = await fetchProducts({
+        page,
+        limit: 12,
+        category: filters.category || undefined,
         sort: filters.sort,
       })
       
-      const response = await fetch(`/api/products?${params}`)
-      const data = await response.json()
-      
-      setProducts(data.products || [])
-      setTotalPages(data.pagination?.totalPages || 1)
+      setProducts(data || [])
+      setTotalPages(pagination?.totalPages || 1)
     } catch (error) {
       console.error('Error fetching products:', error)
     } finally {
