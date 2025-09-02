@@ -130,6 +130,53 @@ export async function getStores() {
   })) || []
 }
 
+export async function getProductBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('Product')
+    .select(`
+      *,
+      category:Category(*)
+    `)
+    .eq('slug', slug)
+    .single()
+  
+  if (error) {
+    console.error('Error fetching product by slug:', error)
+    return null
+  }
+  
+  if (!data) return null
+  
+  // Transformer les images JSON string en array
+  return {
+    ...data,
+    images: JSON.parse(data.images || '[]')
+  }
+}
+
+export async function getRelatedProducts(categoryId: string, excludeId: string, limit = 4) {
+  const { data, error } = await supabase
+    .from('Product')
+    .select(`
+      *,
+      category:Category(*)
+    `)
+    .eq('categoryId', categoryId)
+    .neq('id', excludeId)
+    .limit(limit)
+  
+  if (error) {
+    console.error('Error fetching related products:', error)
+    return []
+  }
+  
+  // Transformer les images JSON string en array
+  return data?.map(product => ({
+    ...product,
+    images: JSON.parse(product.images || '[]')
+  })) || []
+}
+
 export async function getDeliveryZones() {
   const { data, error } = await supabase
     .from('DeliveryZone')
