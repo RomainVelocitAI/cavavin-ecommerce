@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductBySlug, getRelatedProducts } from "@/lib/supabase/client";
-import ProductDetail from "@/components/product/ProductDetail";
+import { ProductDetail } from "@/components/product/ProductDetail";
 
 // Force dynamic rendering for product pages
 export const dynamic = 'force-dynamic';
