@@ -62,15 +62,14 @@ export default function ProductsPage() {
   const loadProducts = async () => {
     setLoading(true)
     try {
-      const { products: data, pagination } = await fetchProducts({
+      const { products: data, total } = await fetchProducts({
         page,
         limit: 12,
         category: filters.category || undefined,
-        sort: filters.sort,
       })
       
       setProducts(data || [])
-      setTotalPages(pagination?.totalPages || 1)
+      setTotalPages(Math.ceil(total / 12) || 1)
     } catch (error) {
       console.error('Error fetching products:', error)
     } finally {

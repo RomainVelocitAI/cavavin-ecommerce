@@ -51,7 +51,7 @@ export async function getProducts(options?: {
     .select(`
       *,
       category:Category(*)
-    `)
+    `, { count: 'exact' })
   
   if (options?.featured) {
     query = query.eq('featured', true)
