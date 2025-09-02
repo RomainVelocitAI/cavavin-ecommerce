@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  price       Float
+  images      String   // JSON array of image URLs
+  inStock     Boolean  @default(true)
+  stockQuantity Int    @default(0)
+  
+  // Wine specific fields
+  vintage     Int?
+  region      String?
+  grapeVariety String?
+  alcoholContent Float?
+  servingTemp String?
+  tastingNotes String?
+  foodPairing String?
+  
+  // Metadata
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  orderItems  OrderItem[]
+  cartItems   CartItem[]
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  image       String?
+  parentId    String?
+  parent      Category? @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryToCategory")
+  products    Product[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Cart {
+  id        String   @id @default(cuid())
+  sessionId String   @unique
+  items     CartItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  orderNumber   String   @unique
+  status        OrderStatus @default(PENDING)
+  
+  // Customer info
+  email         String
+  firstName     String
+  lastName      String
+  phone         String
+  
+  // Delivery info
+  deliveryType  DeliveryType
+  address       String?
+  city          String?
+  postalCode    String?
+  
+  // Click & Collect info
+  storeId       String?
+  pickupDate    DateTime?
+  pickupTime    String?
+  
+  // Payment
+  paymentMethod String?
+  paymentIntentId String?
+  
+  // Totals
+  subtotal      Float
+  deliveryFee   Float    @default(0)
+  total         Float
+  
+  // Age verification
+  ageVerified   Boolean  @default(false)
+  
+  items         OrderItem[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Store {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  postalCode  String
+  phone       String
+  email       String
+  openingHours String  // JSON object with days and hours
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model DeliveryZone {
+  id          String   @id @default(cuid())
+  name        String
+  postalCodes String   // JSON array of postal codes
+  deliveryFee Float
+  minOrder    Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  READY_FOR_PICKUP
+  DELIVERING
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryType {
+  DELIVERY
+  CLICK_COLLECT
+}
