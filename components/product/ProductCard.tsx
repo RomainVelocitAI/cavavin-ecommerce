@@ -28,7 +28,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   
   return (
     <div className="group relative">
-      <Link href={`/products/${product.slug}`}>
+      <Link href={`/produit/${product.slug}`}>
         <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
           <Image
             src={imageUrl}
@@ -48,7 +48,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       <div className="mt-4 space-y-2">
         <div>
           <p className="text-sm text-gray-500">{product.category.name}</p>
-          <Link href={`/products/${product.slug}`}>
+          <Link href={`/produit/${product.slug}`}>
             <h3 className="text-base font-semibold text-gray-900 hover:text-primary">
               {product.name}
             </h3>
