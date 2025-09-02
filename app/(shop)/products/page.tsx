@@ -24,9 +24,14 @@ interface Product {
   inStock: boolean
 }
 
+interface Category {
+  id: string
+  name: string
+  slug: string
+}
 
 export default function ProductsPage() {
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
@@ -42,6 +47,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     loadProducts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, page])
 
   const loadCategories = async () => {
