@@ -4,16 +4,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/lib/supabase/client";
 import { ShoppingCart, Heart, Share2, ChevronLeft, Wine, MapPin, Calendar, Grape } from "lucide-react";
-import Image from "next/image";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const product = await getProductBySlug(params.slug);
+  const resolvedParams = await params;
+  const product = await getProductBySlug(resolvedParams.slug);
   
   if (!product) {
     notFound();
