@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Wine } from 'lucide-react'
 import { formatPrice } from '@/lib/utils/cart'
+import { getApiUrl, API_CONFIG } from '@/lib/config/api'
 
 interface Product {
   id: string
@@ -46,7 +47,8 @@ export default function FeaturedProductsSlider() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await fetch('/api/products?featured=true&limit=10')
+      // Utilise l'API Render au lieu de l'API locale
+      const response = await fetch(`${getApiUrl(API_CONFIG.endpoints.products)}?featured=true&limit=10`)
       const data = await response.json()
       // Dupliquer les produits pour créer un effet de boucle infinie
       if (data.products && data.products.length > 0) {
