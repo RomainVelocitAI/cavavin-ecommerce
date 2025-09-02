@@ -6,6 +6,8 @@ import { Wine, Plus, Minus, ShoppingCart, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { formatPrice, getSessionId } from '@/lib/utils/cart'
+import { useCart } from '@/contexts/CartContext'
+import { Toast } from '@/components/ui/toast'
 
 interface ProductDetailProps {
   product: {
@@ -35,13 +37,24 @@ export function ProductDetail({ product }: ProductDetailProps) {
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [showToast, setShowToast] = useState(false)
+  const { addToCart } = useCart()
 
   const handleAddToCart = () => {
-    // Utilisation du contexte panier à implémenter
-    alert('✅ Produit ajouté au panier!')
+    setLoading(true)
     
-    // Pour l'instant on utilise juste une alerte
-    // Le CartContext doit être intégré ici
+    // Add item to cart
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] || null,
+      quantity: quantity
+    })
+    
+    // Show success toast
+    setShowToast(true)
+    setLoading(false)
   }
 
   const imageUrl = product.images?.[selectedImage] || '/images/wine-placeholder.jpg'
@@ -212,6 +225,16 @@ export function ProductDetail({ product }: ProductDetailProps) {
           )}
         </div>
       </div>
+      
+      {/* Success Toast */}
+      {showToast && (
+        <Toast
+          message="Produit ajouté au panier avec succès!"
+          type="success"
+          duration={3000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   )
 }
