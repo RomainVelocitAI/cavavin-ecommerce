@@ -42,10 +42,10 @@ export default function AgeVerificationPage() {
         <div className="text-center mb-8">
           <Wine className="h-16 w-16 text-red-900 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Vérification d'âge
+            Vérification d&apos;âge
           </h1>
           <p className="text-gray-600">
-            L'accès à ce site est réservé aux personnes majeures
+            L&apos;accès à ce site est réservé aux personnes majeures
           </p>
         </div>
         
@@ -84,13 +84,13 @@ export default function AgeVerificationPage() {
             variant="outline"
             className="w-full"
           >
-            J'ai plus de 18 ans
+            J&apos;ai plus de 18 ans
           </Button>
         </div>
         
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500">
-            L'abus d'alcool est dangereux pour la santé. À consommer avec modération.
+            L&apos;abus d&apos;alcool est dangereux pour la santé. À consommer avec modération.
           </p>
         </div>
       </div>

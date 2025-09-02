@@ -33,7 +33,7 @@ export default function StoresPage() {
               <div className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-red-900 mt-1" />
                 <div>
-                  <p className="font-semibold">Horaires d'ouverture:</p>
+                  <p className="font-semibold">Horaires d&apos;ouverture:</p>
                   <p>Lundi-Samedi: 9h30-19h30</p>
                   <p>Dimanche: 9h30-12h30</p>
                 </div>
@@ -69,7 +69,7 @@ export default function StoresPage() {
               <div className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-red-900 mt-1" />
                 <div>
-                  <p className="font-semibold">Horaires d'ouverture:</p>
+                  <p className="font-semibold">Horaires d&apos;ouverture:</p>
                   <p>Lundi-Samedi: 9h30-19h30</p>
                   <p>Dimanche: Fermé</p>
                 </div>

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 // GET: Récupérer le panier (pour l'instant retourne un panier vide)
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Pour l'instant, retourner un panier vide
     // Dans une vraie application, on stockerait le panier dans la session ou base de données
