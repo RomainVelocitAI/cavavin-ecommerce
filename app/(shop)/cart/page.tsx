@@ -13,11 +13,17 @@ interface CartItem {
   product: {
     id: string
     name: string
+    slug: string
     price: number
     images?: string[]
     vintage?: number
     region?: string
     grapeVariety?: string
+    category: {
+      id: string
+      name: string
+      slug: string
+    }
   }
 }
 
