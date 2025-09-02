@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, Filter } from 'lucide-react'
+import { Filter } from 'lucide-react'
 
 interface ProductFiltersProps {
   categories: Array<{

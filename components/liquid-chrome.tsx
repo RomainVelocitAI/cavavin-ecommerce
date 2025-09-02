@@ -90,7 +90,9 @@ export const Component: FC<ComponentProps> = ({
         }
         `;
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const geometry = new Triangle(gl as any);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const program = new Program(gl as any, {
         vertex: vertexShader,
         fragment: fragmentShader,
@@ -110,6 +112,7 @@ export const Component: FC<ComponentProps> = ({
             uMouse: { value: new Float32Array([0.5, 0.5]) }, // Initialize mouse to center
         },
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mesh = new Mesh(gl as any, { geometry, program });
 
         function resize() {
