@@ -23,11 +23,14 @@ export async function GET() {
     
     try {
       const { PrismaClient } = await import('@prisma/client')
-      const prisma = new PrismaClient()
+      // Force l'utilisation de DIRECT_URL
+      const prisma = new PrismaClient({
+        datasourceUrl: process.env.DIRECT_URL || process.env.DATABASE_URL
+      })
       
       // Tester la connexion
       productCount = await prisma.product.count()
-      dbStatus = 'connected'
+      dbStatus = 'connected with DIRECT_URL'
       
       await prisma.$disconnect()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
