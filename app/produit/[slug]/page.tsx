@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProductBySlug, getRelatedProducts } from "@/lib/supabase/client";
+import { getProductBySlug } from "@/lib/supabase/client";
 import { ProductDetail } from "@/components/product/ProductDetail";
 
 // Force dynamic rendering for product pages
@@ -20,7 +20,12 @@ export default async function ProductPage({ params }: PageProps) {
     notFound();
   }
 
-  const relatedProducts = await getRelatedProducts(product.categoryId, product.id, 4);
+  // Adapter le format du produit pour le composant ProductDetail
+  const formattedProduct = {
+    ...product,
+    images: product.images ? [product.images] : [],
+    description: product.description || ''
+  };
 
-  return <ProductDetail product={product} relatedProducts={relatedProducts} />;
+  return <ProductDetail product={formattedProduct} />;
 }
