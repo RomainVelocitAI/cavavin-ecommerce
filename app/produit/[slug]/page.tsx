@@ -6,13 +6,14 @@ import { getProductBySlug, products, categories } from "@/lib/data";
 import { ShoppingCart, Heart, Share2, ChevronLeft, Wine, MapPin, Calendar, Grape } from "lucide-react";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function ProductPage({ params }: PageProps) {
-  const product = getProductBySlug(params.slug);
+export default async function ProductPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const product = getProductBySlug(resolvedParams.slug);
   
   if (!product) {
     notFound();
