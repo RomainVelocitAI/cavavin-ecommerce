@@ -5,19 +5,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Wine } from 'lucide-react'
 import { formatPrice } from '@/lib/utils/cart'
+import { getProducts } from '@/lib/supabase/client'
 
 interface Product {
   id: string
   name: string
   slug: string
-  description: string
+  description: string | null
   price: number
   images: string[]
   category: {
     name: string
   }
-  vintage?: number
-  region?: string
+  vintage?: number | null
+  region?: string | null
 }
 
 export default function FeaturedProductsSlider() {
@@ -46,11 +47,14 @@ export default function FeaturedProductsSlider() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await fetch('/api/products?featured=true&limit=10')
-      const data = await response.json()
+      const { products: data } = await getProducts({ 
+        featured: true, 
+        limit: 10 
+      })
+      
       // Dupliquer les produits pour créer un effet de boucle infinie
-      if (data.products && data.products.length > 0) {
-        setProducts([...data.products, ...data.products])
+      if (data && data.length > 0) {
+        setProducts([...data, ...data])
       }
     } catch (error) {
       console.error('Error fetching featured products:', error)

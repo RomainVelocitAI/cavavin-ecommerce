@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db/prisma'
-import { Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
+    // Créer une nouvelle instance de PrismaClient avec DIRECT_URL
+    const prisma = new PrismaClient({
+      datasourceUrl: process.env.DIRECT_URL || process.env.DATABASE_URL
+    })
+    
     const searchParams = request.nextUrl.searchParams
     const page = Number(searchParams.get('page') || 1)
     const limit = Number(searchParams.get('limit') || 12)
@@ -16,7 +20,7 @@ export async function GET(request: NextRequest) {
     
     const skip = (page - 1) * limit
     
-    // Construction de la clause where
+    // Construction de la clause where avec les types Prisma
     const where: Prisma.ProductWhereInput = {}
     
     if (category) {
@@ -38,7 +42,7 @@ export async function GET(request: NextRequest) {
       ]
     }
     
-    // Détermination de l'ordre de tri
+    // Détermination de l'ordre de tri avec les types Prisma
     let orderBy: Prisma.ProductOrderByWithRelationInput = {}
     switch (sort) {
       case 'price-asc':
@@ -68,6 +72,8 @@ export async function GET(request: NextRequest) {
       prisma.product.count({ where })
     ])
     
+    await prisma.$disconnect()
+    
     // Conversion des images JSON string en array
     const formattedProducts = products.map(product => ({
       ...product,
@@ -86,12 +92,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching products:', error)
     
-    // En production, retourner plus de détails sur l'erreur pour le debug
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     const errorDetails = {
       error: 'Erreur lors de la récupération des produits',
       message: errorMessage,
-      // Vérifier si c'est une erreur de connexion DB
       isDbError: errorMessage.includes('P1001') || errorMessage.includes('connect') || errorMessage.includes('DATABASE_URL'),
       timestamp: new Date().toISOString()
     }
