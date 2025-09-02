@@ -54,6 +54,9 @@ export function Header() {
             <Link href="/stores" className="hover:text-primary transition">
               Nos Boutiques
             </Link>
+            <Link href="/admin" className="hover:text-primary transition text-wine-700 font-medium">
+              Admin
+            </Link>
           </nav>
           
           {/* Actions */}
@@ -112,6 +115,13 @@ export function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Nos Boutiques
+              </Link>
+              <Link 
+                href="/admin" 
+                className="hover:text-primary transition text-wine-700 font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Admin
               </Link>
             </div>
           </nav>
