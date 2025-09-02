@@ -3,38 +3,50 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
+  console.log('🔄 Connexion à la base de données...')
+  
   // Créer les catégories
   const categories = await Promise.all([
-    prisma.category.create({
-      data: {
+    prisma.category.upsert({
+      where: { slug: 'vins-rouges' },
+      update: {},
+      create: {
         name: 'Vins Rouges',
         slug: 'vins-rouges',
         description: 'Notre sélection de vins rouges de qualité',
       },
     }),
-    prisma.category.create({
-      data: {
+    prisma.category.upsert({
+      where: { slug: 'vins-blancs' },
+      update: {},
+      create: {
         name: 'Vins Blancs',
         slug: 'vins-blancs',
         description: 'Des vins blancs frais et élégants',
       },
     }),
-    prisma.category.create({
-      data: {
+    prisma.category.upsert({
+      where: { slug: 'vins-roses' },
+      update: {},
+      create: {
         name: 'Vins Rosés',
         slug: 'vins-roses',
         description: 'Vins rosés parfaits pour l\'été',
       },
     }),
-    prisma.category.create({
-      data: {
+    prisma.category.upsert({
+      where: { slug: 'spiritueux' },
+      update: {},
+      create: {
         name: 'Spiritueux',
         slug: 'spiritueux',
         description: 'Whisky, Rhum, Gin et autres spiritueux',
       },
     }),
-    prisma.category.create({
-      data: {
+    prisma.category.upsert({
+      where: { slug: 'champagnes' },
+      update: {},
+      create: {
         name: 'Champagnes',
         slug: 'champagnes',
         description: 'Champagnes et vins effervescents',
@@ -283,16 +295,22 @@ async function main() {
   ]
   
   // Insérer les produits
+  console.log('📦 Création des produits...')
   for (const product of products) {
-    await prisma.product.create({
-      data: product,
+    await prisma.product.upsert({
+      where: { slug: product.slug },
+      update: {},
+      create: product,
     })
   }
   
   // Créer les boutiques
+  console.log('🏪 Création des boutiques...')
   await Promise.all([
-    prisma.store.create({
-      data: {
+    prisma.store.upsert({
+      where: { email: 'saintdenis@cavavin-reunion.re' },
+      update: {},
+      create: {
         name: 'Cavavin Saint-Denis',
         address: '123 Rue du Commerce',
         city: 'Saint-Denis',
@@ -310,8 +328,10 @@ async function main() {
         }),
       },
     }),
-    prisma.store.create({
-      data: {
+    prisma.store.upsert({
+      where: { email: 'saintpierre@cavavin-reunion.re' },
+      update: {},
+      create: {
         name: 'Cavavin Saint-Pierre',
         address: '456 Avenue des Vins',
         city: 'Saint-Pierre',
@@ -332,33 +352,42 @@ async function main() {
   ])
   
   // Créer les zones de livraison
+  console.log('🚚 Création des zones de livraison...')
   await Promise.all([
-    prisma.deliveryZone.create({
-      data: {
+    prisma.deliveryZone.upsert({
+      where: { name: 'Zone Nord' },
+      update: {},
+      create: {
         name: 'Zone Nord',
         postalCodes: JSON.stringify(['97400', '97490']),
         deliveryFee: 5,
         minOrder: 30,
       },
     }),
-    prisma.deliveryZone.create({
-      data: {
+    prisma.deliveryZone.upsert({
+      where: { name: 'Zone Sud' },
+      update: {},
+      create: {
         name: 'Zone Sud',
         postalCodes: JSON.stringify(['97410', '97430', '97480']),
         deliveryFee: 5,
         minOrder: 30,
       },
     }),
-    prisma.deliveryZone.create({
-      data: {
+    prisma.deliveryZone.upsert({
+      where: { name: 'Zone Ouest' },
+      update: {},
+      create: {
         name: 'Zone Ouest',
         postalCodes: JSON.stringify(['97420', '97435', '97460']),
         deliveryFee: 7,
         minOrder: 40,
       },
     }),
-    prisma.deliveryZone.create({
-      data: {
+    prisma.deliveryZone.upsert({
+      where: { name: 'Zone Est' },
+      update: {},
+      create: {
         name: 'Zone Est',
         postalCodes: JSON.stringify(['97470', '97440']),
         deliveryFee: 7,
