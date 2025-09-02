@@ -306,11 +306,14 @@ async function main() {
   
   // Créer les boutiques
   console.log('🏪 Création des boutiques...')
+  
+  // First, delete existing stores to avoid duplicates
+  await prisma.store.deleteMany({})
+  
+  // Create new stores
   await Promise.all([
-    prisma.store.upsert({
-      where: { email: 'saintdenis@cavavin-reunion.re' },
-      update: {},
-      create: {
+    prisma.store.create({
+      data: {
         name: 'Cavavin Saint-Denis',
         address: '123 Rue du Commerce',
         city: 'Saint-Denis',
@@ -328,10 +331,8 @@ async function main() {
         }),
       },
     }),
-    prisma.store.upsert({
-      where: { email: 'saintpierre@cavavin-reunion.re' },
-      update: {},
-      create: {
+    prisma.store.create({
+      data: {
         name: 'Cavavin Saint-Pierre',
         address: '456 Avenue des Vins',
         city: 'Saint-Pierre',
@@ -353,41 +354,38 @@ async function main() {
   
   // Créer les zones de livraison
   console.log('🚚 Création des zones de livraison...')
+  
+  // First, delete existing delivery zones to avoid duplicates
+  await prisma.deliveryZone.deleteMany({})
+  
+  // Create new delivery zones
   await Promise.all([
-    prisma.deliveryZone.upsert({
-      where: { name: 'Zone Nord' },
-      update: {},
-      create: {
+    prisma.deliveryZone.create({
+      data: {
         name: 'Zone Nord',
         postalCodes: JSON.stringify(['97400', '97490']),
         deliveryFee: 5,
         minOrder: 30,
       },
     }),
-    prisma.deliveryZone.upsert({
-      where: { name: 'Zone Sud' },
-      update: {},
-      create: {
+    prisma.deliveryZone.create({
+      data: {
         name: 'Zone Sud',
         postalCodes: JSON.stringify(['97410', '97430', '97480']),
         deliveryFee: 5,
         minOrder: 30,
       },
     }),
-    prisma.deliveryZone.upsert({
-      where: { name: 'Zone Ouest' },
-      update: {},
-      create: {
+    prisma.deliveryZone.create({
+      data: {
         name: 'Zone Ouest',
         postalCodes: JSON.stringify(['97420', '97435', '97460']),
         deliveryFee: 7,
         minOrder: 40,
       },
     }),
-    prisma.deliveryZone.upsert({
-      where: { name: 'Zone Est' },
-      update: {},
-      create: {
+    prisma.deliveryZone.create({
+      data: {
         name: 'Zone Est',
         postalCodes: JSON.stringify(['97470', '97440']),
         deliveryFee: 7,
