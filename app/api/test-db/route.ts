@@ -30,6 +30,7 @@ export async function GET() {
       dbStatus = 'connected'
       
       await prisma.$disconnect()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (dbError: any) {
       dbStatus = `error: ${dbError.message}`
     }
