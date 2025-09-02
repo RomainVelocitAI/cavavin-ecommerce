@@ -88,8 +88,11 @@ export default function ProductsPage() {
     }
   }
 
-  const handleFilterChange = (newFilters: { category: string; sort: string }) => {
-    setFilters(newFilters)
+  const handleFilterChange = (newFilters: { category?: string; sort?: string; priceRange?: [number, number] }) => {
+    setFilters({
+      category: newFilters.category || '',
+      sort: newFilters.sort || 'newest'
+    })
     setPage(1) // Reset to first page when filters change
   }
 
