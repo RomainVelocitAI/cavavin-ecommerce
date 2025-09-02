@@ -1,5 +1,6 @@
 'use client'
 
+// Cavavin E-commerce - Version 0.1.2
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Truck, Store, Shield, Wine } from 'lucide-react'
