@@ -5,6 +5,10 @@ import Footer from "@/components/Footer";
 import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/lib/supabase/client";
 import { ShoppingCart, Heart, Share2, ChevronLeft, Wine, MapPin, Calendar, Grape } from "lucide-react";
 
+// Force dynamic rendering for product pages
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Revalidate every hour
+
 interface PageProps {
   params: Promise<{
     slug: string;
@@ -195,12 +199,4 @@ export default async function ProductPage({ params }: PageProps) {
       <Footer />
     </div>
   );
-}
-
-// Generate static params for all products
-export async function generateStaticParams() {
-  const slugs = await getAllProductSlugs();
-  return slugs.map((item) => ({
-    slug: item.slug,
-  }));
 }
