@@ -12,12 +12,15 @@ interface Product {
   price: number
   slug: string
   description?: string
-  images?: string[]
-  category?: {
+  images: string[]
+  category: {
     id: string
     name: string
     slug: string
   }
+  vintage?: number | null
+  region?: string | null
+  inStock: boolean
 }
 
 const categories = [
