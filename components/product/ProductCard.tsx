@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/lib/utils/cart'
+import { useCart } from '@/contexts/CartContext'
+import { useState } from 'react'
+import { Toast } from '@/components/ui/toast'
 
 interface ProductCardProps {
   product: {
@@ -25,6 +28,25 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const imageUrl = product.images?.[0] || '/images/wine-placeholder.jpg'
+  const { addToCart } = useCart()
+  const [showToast, setShowToast] = useState(false)
+  
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      // If parent provided a handler, use it (for compatibility)
+      onAddToCart(product.id)
+    } else {
+      // Otherwise use CartContext directly
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.images?.[0] || null,
+        quantity: 1
+      })
+      setShowToast(true)
+    }
+  }
   
   return (
     <div className="group relative">
@@ -63,13 +85,13 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           <p className="text-lg font-bold text-primary">
             {formatPrice(product.price)}
           </p>
-          {product.inStock && onAddToCart && (
+          {product.inStock && (
             <Button
               size="sm"
               variant="outline"
               onClick={(e) => {
                 e.preventDefault()
-                onAddToCart(product.id)
+                handleAddToCart()
               }}
               className="gap-2"
             >
@@ -79,6 +101,16 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
           )}
         </div>
       </div>
+      
+      {/* Success Toast if no parent handler */}
+      {showToast && !onAddToCart && (
+        <Toast
+          message="Produit ajouté au panier avec succès!"
+          type="success"
+          duration={3000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   )
 }

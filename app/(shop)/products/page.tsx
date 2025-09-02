@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { ProductCard } from '@/components/product/ProductCard'
 import { ProductFilters } from '@/components/product/ProductFilters'
-import { getSessionId } from '@/lib/utils/cart'
 import { getProducts as fetchProducts, getCategories } from '@/lib/supabase/client'
+import { useCart } from '@/contexts/CartContext'
+import { Toast } from '@/components/ui/toast'
 import { Loader2 } from 'lucide-react'
 
 interface Product {
@@ -40,6 +41,8 @@ export default function ProductsPage() {
   })
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [showToast, setShowToast] = useState(false)
+  const { addToCart } = useCart()
 
   useEffect(() => {
     loadCategories()
@@ -77,28 +80,19 @@ export default function ProductsPage() {
     }
   }
 
-  const handleAddToCart = async (productId: string) => {
-    try {
-      const sessionId = getSessionId()
-      const response = await fetch('/api/cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-session-id': sessionId,
-        },
-        body: JSON.stringify({ productId, quantity: 1 }),
-      })
-      
-      if (response.ok) {
-        // Optionally show a success message
-        alert('Produit ajouté au panier!')
-        // Refresh cart count in header
-        window.dispatchEvent(new Event('cart-updated'))
-      }
-    } catch (error) {
-      console.error('Error adding to cart:', error)
-      alert('Erreur lors de l&apos;ajout au panier')
-    }
+  const handleAddToCart = (productId: string) => {
+    const product = products.find(p => p.id === productId)
+    if (!product) return
+    
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images?.[0] || null,
+      quantity: 1
+    })
+    
+    setShowToast(true)
   }
 
   const handleFilterChange = (newFilters: { category?: string; sort?: string; priceRange?: [number, number] }) => {
@@ -170,6 +164,16 @@ export default function ProductsPage() {
           )}
         </div>
       </div>
+      
+      {/* Success Toast */}
+      {showToast && (
+        <Toast
+          message="Produit ajouté au panier avec succès!"
+          type="success"
+          duration={3000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   )
 }
