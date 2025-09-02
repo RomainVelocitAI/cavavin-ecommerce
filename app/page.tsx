@@ -61,7 +61,7 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link href="/stores">
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-red-900">
+                <Button size="lg" className="bg-red-800 text-white hover:bg-red-700 border-2 border-red-800">
                   Nos boutiques
                 </Button>
               </Link>
