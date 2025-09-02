@@ -14,14 +14,9 @@ import {
   Package
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabase/client'
 import { formatPrice } from '@/lib/utils/cart'
 import { Toast } from '@/components/ui/toast'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 interface Product {
   id: string
@@ -30,19 +25,19 @@ interface Product {
   description: string | null
   price: number
   images: string | null
-  category_id: string
+  categoryId: string
   vintage: number | null
   region: string | null
-  grape_variety: string | null
-  alcohol_content: number | null
-  serving_temp: string | null
-  tasting_notes: string | null
-  food_pairing: string | null
-  in_stock: boolean
-  stock_quantity: number
+  grapeVariety: string | null
+  alcoholContent: number | null
+  servingTemp: string | null
+  tastingNotes: string | null
+  foodPairing: string | null
+  inStock: boolean
+  stockQuantity: number
   featured: boolean
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
   category?: {
     id: string
     name: string
@@ -80,10 +75,10 @@ export default function AdminPage() {
   const fetchProducts = async () => {
     try {
       const { data, error } = await supabase
-        .from('products')
+        .from('Product')
         .select(`
           *,
-          category:categories(id, name, slug)
+          category:Category(id, name, slug)
         `)
         .order('name')
 
@@ -118,9 +113,9 @@ export default function AdminPage() {
 
     // Stock filter
     if (filterStock === 'in-stock') {
-      filtered = filtered.filter(product => product.in_stock && product.stock_quantity > 0)
+      filtered = filtered.filter(product => product.inStock && product.stockQuantity > 0)
     } else if (filterStock === 'out-of-stock') {
-      filtered = filtered.filter(product => !product.in_stock || product.stock_quantity === 0)
+      filtered = filtered.filter(product => !product.inStock || product.stockQuantity === 0)
     }
 
     // Sorting
@@ -135,10 +130,10 @@ export default function AdminPage() {
           comparison = a.price - b.price
           break
         case 'stock':
-          comparison = a.stock_quantity - b.stock_quantity
+          comparison = a.stockQuantity - b.stockQuantity
           break
         case 'updated':
-          comparison = new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+          comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
           break
       }
 
@@ -172,10 +167,10 @@ export default function AdminPage() {
 
     try {
       const { error } = await supabase
-        .from('products')
+        .from('Product')
         .update({ 
           price: newPrice,
-          updated_at: new Date().toISOString()
+          updatedAt: new Date().toISOString()
         })
         .eq('id', editingPrice.id)
 
@@ -183,7 +178,7 @@ export default function AdminPage() {
 
       setProducts(products.map(p => 
         p.id === editingPrice.id 
-          ? { ...p, price: newPrice, updated_at: new Date().toISOString() }
+          ? { ...p, price: newPrice, updatedAt: new Date().toISOString() }
           : p
       ))
       
@@ -200,10 +195,10 @@ export default function AdminPage() {
       const newFeatured = !product.featured
       
       const { error } = await supabase
-        .from('products')
+        .from('Product')
         .update({ 
           featured: newFeatured,
-          updated_at: new Date().toISOString()
+          updatedAt: new Date().toISOString()
         })
         .eq('id', product.id)
 
@@ -211,7 +206,7 @@ export default function AdminPage() {
 
       setProducts(products.map(p => 
         p.id === product.id 
-          ? { ...p, featured: newFeatured, updated_at: new Date().toISOString() }
+          ? { ...p, featured: newFeatured, updatedAt: new Date().toISOString() }
           : p
       ))
       
@@ -229,13 +224,13 @@ export default function AdminPage() {
 
   const toggleStock = async (product: Product) => {
     try {
-      const newInStock = !product.in_stock
+      const newInStock = !product.inStock
       
       const { error } = await supabase
-        .from('products')
+        .from('Product')
         .update({ 
-          in_stock: newInStock,
-          updated_at: new Date().toISOString()
+          inStock: newInStock,
+          updatedAt: new Date().toISOString()
         })
         .eq('id', product.id)
 
@@ -243,7 +238,7 @@ export default function AdminPage() {
 
       setProducts(products.map(p => 
         p.id === product.id 
-          ? { ...p, in_stock: newInStock, updated_at: new Date().toISOString() }
+          ? { ...p, inStock: newInStock, updatedAt: new Date().toISOString() }
           : p
       ))
       
@@ -264,11 +259,11 @@ export default function AdminPage() {
 
     try {
       const { error } = await supabase
-        .from('products')
+        .from('Product')
         .update({ 
-          stock_quantity: quantity,
-          in_stock: quantity > 0,
-          updated_at: new Date().toISOString()
+          stockQuantity: quantity,
+          inStock: quantity > 0,
+          updatedAt: new Date().toISOString()
         })
         .eq('id', productId)
 
@@ -276,7 +271,7 @@ export default function AdminPage() {
 
       setProducts(products.map(p => 
         p.id === productId 
-          ? { ...p, stock_quantity: quantity, in_stock: quantity > 0, updated_at: new Date().toISOString() }
+          ? { ...p, stockQuantity: quantity, inStock: quantity > 0, updatedAt: new Date().toISOString() }
           : p
       ))
       
@@ -465,7 +460,7 @@ export default function AdminPage() {
                     <div className="flex items-center gap-2">
                       <input
                         type="number"
-                        value={product.stock_quantity}
+                        value={product.stockQuantity}
                         onChange={(e) => updateStockQuantity(product.id, parseInt(e.target.value))}
                         className="w-20 px-2 py-1 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-wine-700"
                         min="0"
@@ -493,12 +488,12 @@ export default function AdminPage() {
                     <button
                       onClick={() => toggleStock(product)}
                       className={`px-3 py-1 rounded-full text-xs font-medium transition ${
-                        product.in_stock
+                        product.inStock
                           ? 'bg-green-100 text-green-800 hover:bg-green-200'
                           : 'bg-red-100 text-red-800 hover:bg-red-200'
                       }`}
                     >
-                      {product.in_stock ? 'En stock' : 'Rupture'}
+                      {product.inStock ? 'En stock' : 'Rupture'}
                     </button>
                   </td>
                 </tr>
@@ -530,13 +525,13 @@ export default function AdminPage() {
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <p className="text-sm text-gray-600 mb-1">En stock</p>
           <p className="text-2xl font-bold text-green-600">
-            {products.filter(p => p.in_stock && p.stock_quantity > 0).length}
+            {products.filter(p => p.inStock && p.stockQuantity > 0).length}
           </p>
         </div>
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <p className="text-sm text-gray-600 mb-1">Rupture de stock</p>
           <p className="text-2xl font-bold text-red-600">
-            {products.filter(p => !p.in_stock || p.stock_quantity === 0).length}
+            {products.filter(p => !p.inStock || p.stockQuantity === 0).length}
           </p>
         </div>
       </div>
