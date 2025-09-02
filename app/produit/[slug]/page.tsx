@@ -2,27 +2,24 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getProductBySlug, products, categories } from "@/lib/data";
+import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/lib/supabase/client";
 import { ShoppingCart, Heart, Share2, ChevronLeft, Wine, MapPin, Calendar, Grape } from "lucide-react";
+import Image from "next/image";
 
 interface PageProps {
-  params: Promise<{
+  params: {
     slug: string;
-  }>;
+  };
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const product = getProductBySlug(resolvedParams.slug);
+  const product = await getProductBySlug(params.slug);
   
   if (!product) {
     notFound();
   }
 
-  const category = categories.find(c => c.id === product.categoryId);
-  const relatedProducts = products
-    .filter(p => p.categoryId === product.categoryId && p.id !== product.id)
-    .slice(0, 4);
+  const relatedProducts = await getRelatedProducts(product.categoryId, product.id, 4);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-champagne/5">
@@ -35,9 +32,11 @@ export default async function ProductPage({ params }: PageProps) {
           <span>/</span>
           <Link href="/catalogue" className="hover:text-wine-700">Catalogue</Link>
           <span>/</span>
-          <Link href={`/catalogue?category=${category?.slug}`} className="hover:text-wine-700">
-            {category?.name}
-          </Link>
+          {product.category && (
+            <Link href={`/catalogue?category=${product.category.slug}`} className="hover:text-wine-700">
+              {product.category.name}
+            </Link>
+          )}
           <span>/</span>
           <span className="text-wine-900 font-medium">{product.name}</span>
         </div>
@@ -70,12 +69,11 @@ export default async function ProductPage({ params }: PageProps) {
           {/* Product Info */}
           <div>
             <div className="mb-6">
-              <span 
-                className="inline-block px-3 py-1 text-sm rounded-full text-white mb-4"
-                style={{ backgroundColor: category?.color }}
-              >
-                {category?.name}
-              </span>
+              {product.category && (
+                <span className="inline-block px-3 py-1 text-sm rounded-full text-white mb-4 bg-wine-700">
+                  {product.category.name}
+                </span>
+              )}
               
               <h1 className="text-4xl font-bold text-wine-900 mb-2">{product.name}</h1>
               <p className="text-xl text-gray-600 mb-4">{product.region}</p>
@@ -83,7 +81,7 @@ export default async function ProductPage({ params }: PageProps) {
               <div className="flex items-baseline gap-4 mb-6">
                 <span className="text-4xl font-bold text-wine-700">{product.price.toFixed(2)}€</span>
                 <span className="text-sm text-gray-500">
-                  {product.stock > 0 ? `En stock (${product.stock} bouteilles)` : 'Rupture de stock'}
+                  {product.inStock ? `En stock (${product.stockQuantity} bouteilles)` : 'Rupture de stock'}
                 </span>
               </div>
 
@@ -94,12 +92,12 @@ export default async function ProductPage({ params }: PageProps) {
             <div className="bg-white rounded-xl p-6 mb-8 shadow-md">
               <h2 className="text-xl font-bold mb-4 text-wine-900">Caractéristiques</h2>
               <div className="grid grid-cols-2 gap-4">
-                {product.year && (
+                {product.vintage && (
                   <div className="flex items-start gap-3">
                     <Calendar className="h-5 w-5 text-wine-700 mt-0.5" />
                     <div>
                       <p className="text-sm text-gray-500">Millésime</p>
-                      <p className="font-medium">{product.year}</p>
+                      <p className="font-medium">{product.vintage}</p>
                     </div>
                   </div>
                 )}
@@ -145,7 +143,7 @@ export default async function ProductPage({ params }: PageProps) {
             <div className="flex gap-4">
               <button 
                 className="flex-1 px-8 py-4 bg-wine-700 text-white rounded-lg hover:bg-wine-900 transition-colors flex items-center justify-center gap-2 font-semibold shadow-lg"
-                disabled={product.stock === 0}
+                disabled={!product.inStock}
               >
                 <ShoppingCart className="h-5 w-5" />
                 Ajouter au panier
@@ -201,7 +199,8 @@ export default async function ProductPage({ params }: PageProps) {
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  return products.map((product) => ({
-    slug: product.slug,
+  const slugs = await getAllProductSlugs();
+  return slugs.map((item) => ({
+    slug: item.slug,
   }));
 }
