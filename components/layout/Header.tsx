@@ -1,37 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { ShoppingCart, Menu, X, Wine, MapPin, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getSessionId } from '@/lib/utils/cart'
+import { useCart } from '@/contexts/CartContext'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [cartCount, setCartCount] = useState(0)
-  
-  useEffect(() => {
-    // Récupérer le nombre d'items dans le panier
-    fetchCartCount()
-  }, [])
-  
-  const fetchCartCount = async () => {
-    try {
-      const sessionId = getSessionId()
-      const response = await fetch('/api/cart', {
-        headers: {
-          'x-session-id': sessionId
-        }
-      })
-      if (response.ok) {
-        const cart = await response.json()
-        const count = cart.items?.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0) || 0
-        setCartCount(count)
-      }
-    } catch (error) {
-      console.error('Error fetching cart:', error)
-    }
-  }
+  const { totalItems } = useCart()
   
   return (
     <header className="sticky top-0 z-50 bg-white border-b">
@@ -84,9 +61,9 @@ export function Header() {
             <Link href="/cart">
               <Button variant="outline" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                {cartCount > 0 && (
+                {totalItems > 0 && (
                   <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartCount}
+                    {totalItems}
                   </span>
                 )}
               </Button>
