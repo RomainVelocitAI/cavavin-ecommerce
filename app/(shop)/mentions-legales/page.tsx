@@ -33,19 +33,19 @@ export default function MentionsLegalesPage() {
         </section>
         
         <section>
-          <h2 className="text-2xl font-semibold mb-3">Licences de vente d'alcool</h2>
+          <h2 className="text-2xl font-semibold mb-3">Licences de vente d&apos;alcool</h2>
           <div className="bg-gray-50 rounded-lg p-6">
             <p><strong>Licence IV Saint-Denis:</strong> N° 974-2023-0001</p>
             <p><strong>Licence IV Saint-Pierre:</strong> N° 974-2023-0002</p>
-            <p><strong>Numéro d'agrément:</strong> FR 974 123 CE</p>
+            <p><strong>Numéro d&apos;agrément:</strong> FR 974 123 CE</p>
           </div>
         </section>
         
         <section>
           <h2 className="text-2xl font-semibold mb-3">Propriété intellectuelle</h2>
           <p>
-            L'ensemble de ce site relève de la législation française et internationale sur le droit 
-            d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, 
+            L&apos;ensemble de ce site relève de la législation française et internationale sur le droit 
+            d&apos;auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, 
             y compris pour les documents téléchargeables et les représentations iconographiques et 
             photographiques.
           </p>
@@ -55,8 +55,8 @@ export default function MentionsLegalesPage() {
           <h2 className="text-2xl font-semibold mb-3">Protection des données personnelles</h2>
           <p>
             Conformément à la loi « informatique et libertés » du 6 janvier 1978 modifiée et au 
-            Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, 
-            de rectification, de suppression et d'opposition aux données personnelles vous concernant.
+            Règlement Général sur la Protection des Données (RGPD), vous disposez d&apos;un droit d&apos;accès, 
+            de rectification, de suppression et d&apos;opposition aux données personnelles vous concernant.
           </p>
           <p className="mt-3">
             Pour exercer ces droits, vous pouvez nous contacter par email à: 
@@ -67,8 +67,8 @@ export default function MentionsLegalesPage() {
         <section>
           <h2 className="text-2xl font-semibold mb-3">Cookies</h2>
           <p>
-            Ce site utilise des cookies pour améliorer l'expérience utilisateur et analyser le trafic. 
-            En continuant à naviguer sur ce site, vous acceptez l'utilisation de cookies conformément 
+            Ce site utilise des cookies pour améliorer l&apos;expérience utilisateur et analyser le trafic. 
+            En continuant à naviguer sur ce site, vous acceptez l&apos;utilisation de cookies conformément 
             à notre politique de confidentialité.
           </p>
         </section>
@@ -91,8 +91,8 @@ export default function MentionsLegalesPage() {
           <h2 className="text-2xl font-semibold mb-3">Avertissement</h2>
           <div className="bg-yellow-50 border border-yellow-400 rounded-lg p-4">
             <p>
-              <strong>La vente d'alcool est interdite aux mineurs.</strong> 
-              L'abus d'alcool est dangereux pour la santé. À consommer avec modération.
+              <strong>La vente d&apos;alcool est interdite aux mineurs.</strong> 
+              L&apos;abus d&apos;alcool est dangereux pour la santé. À consommer avec modération.
             </p>
           </div>
         </section>

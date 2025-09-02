@@ -7,8 +7,8 @@ export default function AboutPage() {
       
       <div className="prose max-w-none">
         <p className="text-lg mb-6">
-          Depuis 1985, Cavavin La Réunion est votre caviste de référence sur l'île. 
-          Avec plus de 35 ans d'expérience, nous proposons une sélection exceptionnelle 
+          Depuis 1985, Cavavin La Réunion est votre caviste de référence sur l&apos;île. 
+          Avec plus de 35 ans d&apos;expérience, nous proposons une sélection exceptionnelle 
           de plus de 250 vins et spiritueux du monde entier.
         </p>
         
@@ -39,7 +39,7 @@ export default function AboutPage() {
         <p className="mb-4">
           Fondée en 1985, Cavavin La Réunion a commencé comme une petite cave à Saint-Denis. 
           Au fil des années, nous avons développé notre expertise et élargi notre sélection 
-          pour devenir l'une des références incontournables de l'île en matière de vins et spiritueux.
+          pour devenir l&apos;une des références incontournables de l&apos;île en matière de vins et spiritueux.
         </p>
         
         <h2 className="text-2xl font-bold mt-8 mb-4">Notre Engagement</h2>
@@ -52,7 +52,7 @@ export default function AboutPage() {
         <h2 className="text-2xl font-bold mt-8 mb-4">Nos Services</h2>
         <ul className="list-disc pl-6 space-y-2">
           <li>Conseils personnalisés en boutique</li>
-          <li>Livraison sur toute l'île (gratuite dès 100€)</li>
+          <li>Livraison sur toute l&apos;île (gratuite dès 100€)</li>
           <li>Click & Collect dans nos 2 boutiques</li>
           <li>Organisation de dégustations</li>
           <li>Commandes spéciales sur demande</li>
