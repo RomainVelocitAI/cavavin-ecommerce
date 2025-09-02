@@ -177,6 +177,19 @@ export async function getRelatedProducts(categoryId: string, excludeId: string, 
   })) || []
 }
 
+export async function getAllProductSlugs() {
+  const { data, error } = await supabase
+    .from('Product')
+    .select('slug')
+  
+  if (error) {
+    console.error('Error fetching product slugs:', error)
+    return []
+  }
+  
+  return data || []
+}
+
 export async function getDeliveryZones() {
   const { data, error } = await supabase
     .from('DeliveryZone')
