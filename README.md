@@ -1,38 +1,34 @@
 # Cavavin E-commerce
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Site e-commerce pour Cavavin La Réunion - Vins et Spiritueux
 
-## Getting Started
+## Stack Technique
 
-First, run the development server:
+- **Frontend**: Next.js 15.5.2, React 19, TypeScript
+- **Database**: Supabase (PostgreSQL)
+- **Deployment**: Vercel
+- **Styling**: Tailwind CSS
+- **Paiement**: Stripe (intégration prévue)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Fonctionnalités
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- ✅ Catalogue de produits (vins, spiritueux, champagnes)
+- ✅ Produits vedettes sur la page d'accueil
+- ✅ Catégories de produits
+- ✅ Informations détaillées sur les vins (région, cépage, notes de dégustation)
+- 🔄 Panier et commande (en développement)
+- 🔄 Paiement Stripe (en développement)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Copier `.env.local.example` en `.env.local`
+2. Ajouter les variables d'environnement Supabase
+3. Installer les dépendances : `npm install`
+4. Lancer le serveur de développement : `npm run dev`
 
-## Learn More
+## Déploiement
 
-To learn more about Next.js, take a look at the following resources:
+Le site est automatiquement déployé sur Vercel à chaque push sur la branche `main`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Dernière mise à jour : 02/09/2025 - v0.1.2*
