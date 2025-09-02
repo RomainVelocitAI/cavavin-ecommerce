@@ -4,12 +4,13 @@ import { prisma } from '@/lib/db/prisma'
 import { ProductDetail } from '@/components/product/ProductDetail'
 
 interface ProductPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const resolvedParams = await params
   const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug: resolvedParams.slug },
   })
   
   if (!product) {
@@ -31,8 +32,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  const resolvedParams = await params
   const product = await prisma.product.findUnique({
-    where: { slug: params.slug },
+    where: { slug: resolvedParams.slug },
     include: {
       category: true,
     },
