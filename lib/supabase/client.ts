@@ -87,10 +87,10 @@ export async function getProducts(options?: {
     return { products: [], total: 0 }
   }
   
-  // Transformer les images JSON string en array
+  // Transformer les images en array si nécessaire
   const products = data?.map(product => ({
     ...product,
-    images: JSON.parse(product.images || '[]')
+    images: product.images ? [product.images] : []
   })) || []
   
   return {
@@ -147,11 +147,8 @@ export async function getProductBySlug(slug: string) {
   
   if (!data) return null
   
-  // Transformer les images JSON string en array
-  return {
-    ...data,
-    images: JSON.parse(data.images || '[]')
-  }
+  // Les images sont maintenant de simples URLs, pas du JSON
+  return data
 }
 
 export async function getRelatedProducts(categoryId: string, excludeId: string, limit = 4) {
@@ -170,11 +167,8 @@ export async function getRelatedProducts(categoryId: string, excludeId: string, 
     return []
   }
   
-  // Transformer les images JSON string en array
-  return data?.map(product => ({
-    ...product,
-    images: JSON.parse(product.images || '[]')
-  })) || []
+  // Les images sont maintenant de simples URLs
+  return data || []
 }
 
 export async function getAllProductSlugs() {
