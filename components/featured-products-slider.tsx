@@ -6,20 +6,7 @@ import Image from 'next/image'
 import { Wine } from 'lucide-react'
 import { formatPrice } from '@/lib/utils/cart'
 import { getProducts } from '@/lib/supabase/client'
-
-interface Product {
-  id: string
-  name: string
-  slug: string
-  description: string | null
-  price: number
-  images: string[]
-  category: {
-    name: string
-  }
-  vintage?: number | null
-  region?: string | null
-}
+import type { Product } from '@/lib/types'
 
 export default function FeaturedProductsSlider() {
   const [products, setProducts] = useState<Product[]>([])
@@ -57,7 +44,7 @@ export default function FeaturedProductsSlider() {
         setProducts([...data, ...data])
       }
     } catch (error) {
-      console.error('Error fetching featured products:', error)
+      // Silently handle error, products will remain empty
     } finally {
       setLoading(false)
     }
