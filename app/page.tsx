@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ArrowRight, Truck, Store, Shield, Wine } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import FeaturedProductsSlider from '@/components/featured-products-slider'
+import CavavinStoresSelector from '@/components/cavavin-stores-selector'
 import { ImageTrail } from '@/components/ui/image-trail'
 import { useRef } from 'react'
 
@@ -72,6 +73,9 @@ export default function HomePage() {
 
       {/* Featured Products */}
       <FeaturedProductsSlider />
+
+      {/* Cavavin Presentation & Stores */}
+      <CavavinStoresSelector />
 
       {/* Features */}
       <section className="py-16 bg-gray-50">
