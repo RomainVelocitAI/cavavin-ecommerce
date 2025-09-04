@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, Phone, Wine, Award } from 'lucide-react';
+import { MapPin, Clock, Wine, Award } from 'lucide-react';
 
 const CavavinStoresSelector = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -73,7 +73,7 @@ const CavavinStoresSelector = () => {
             Découvrez Cavavin La Réunion
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Votre caviste de référence avec deux boutiques sur l'île, 
+            Votre caviste de référence avec deux boutiques sur l&apos;île, 
             plus de 250 références et une équipe passionnée à votre service.
           </p>
         </div>
@@ -177,7 +177,7 @@ const CavavinStoresSelector = () => {
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-primary">20+</div>
-            <div className="text-gray-600">Ans d'expérience</div>
+            <div className="text-gray-600">Ans d&apos;expérience</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-primary">24h</div>
