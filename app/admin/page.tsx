@@ -8,12 +8,8 @@ import {
   X, 
   Star, 
   StarOff,
-  Filter,
-  ChevronUp,
-  ChevronDown,
   Package
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase/client'
 import { formatPrice } from '@/lib/utils/cart'
 import { Toast } from '@/components/ui/toast'

@@ -3,7 +3,7 @@ import { FaCampground, FaFire, FaTint, FaHotTub, FaHiking } from 'react-icons/fa
 
 const InteractiveSelector = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [animatedOptions, setAnimatedOptions] = useState([]);
+  const [animatedOptions, setAnimatedOptions] = useState<number[]>([]);
   
   const options = [
     {
@@ -38,14 +38,14 @@ const InteractiveSelector = () => {
     }
   ];
 
-  const handleOptionClick = (index) => {
+  const handleOptionClick = (index: number) => {
     if (index !== activeIndex) {
       setActiveIndex(index);
     }
   };
 
   useEffect(() => {
-    const timers = [];
+    const timers: NodeJS.Timeout[] = [];
     
     options.forEach((_, i) => {
       const timer = setTimeout(() => {
@@ -57,7 +57,7 @@ const InteractiveSelector = () => {
     return () => {
       timers.forEach(timer => clearTimeout(timer));
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-[#222] font-sans text-white"> 

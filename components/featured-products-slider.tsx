@@ -43,7 +43,7 @@ export default function FeaturedProductsSlider() {
       if (data && data.length > 0) {
         setProducts([...data, ...data])
       }
-    } catch (error) {
+    } catch (_error) {
       // Silently handle error, products will remain empty
     } finally {
       setLoading(false)

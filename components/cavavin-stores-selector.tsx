@@ -62,7 +62,7 @@ const CavavinStoresSelector = () => {
     return () => {
       timers.forEach(timer => clearTimeout(timer));
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">

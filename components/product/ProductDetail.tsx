@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Wine, Plus, Minus, ShoppingCart, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { formatPrice, getSessionId } from '@/lib/utils/cart'
+import { formatPrice } from '@/lib/utils/cart'
 import { useCart } from '@/contexts/CartContext'
 import { Toast } from '@/components/ui/toast'
 
